@@ -116,7 +116,7 @@ export function LandingPage() {
       <footer className="bg-gray-100 text-gray-900 py-8 px-6 md:px-12 dark:bg-gray-800 dark:text-gray-100">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center">
-            <img alt="Boat Rental" className="h-8 mr-4" src="/placeholder.svg" />
+            {/* <img alt="Boat Rental" className="h-8 mr-4" src="/placeholder.svg" /> */}
             <p>© 2023 Boat Rental. All rights reserved.</p>
           </div>
           <nav className="hidden md:flex items-center space-x-6">
