@@ -18,7 +18,7 @@ export function LandingPage() {
           <p className="text-gray-600 dark:text-gray-400">
             Rent the perfect boat for your next getaway. From small sailboats to luxurious yachts, we have it all.
           </p>
-          <Button className="mt-4" variant="primary">
+          <Button className="mt-4" variant="default">
             Explore Boats
           </Button>
         </div>
@@ -36,7 +36,7 @@ export function LandingPage() {
               <p className="text-gray-600 dark:text-gray-400 mb-4">
                 Experience the thrill of sailing with our well-maintained sailboats.
               </p>
-              <Button variant="primary">Rent Now</Button>
+              <Button variant="default">Rent Now</Button>
             </CardContent>
           </Card>
           <Card>
@@ -46,7 +46,7 @@ export function LandingPage() {
               <p className="text-gray-600 dark:text-gray-400 mb-4">
                 Cruise the waters with power and speed in our reliable motorboats.
               </p>
-              <Button variant="primary">Rent Now</Button>
+              <Button variant="default">Rent Now</Button>
             </CardContent>
           </Card>
           <Card>
@@ -56,7 +56,7 @@ export function LandingPage() {
               <p className="text-gray-600 dark:text-gray-400 mb-4">
                 Indulge in luxury and comfort with our well-appointed yachts.
               </p>
-              <Button variant="primary">Rent Now</Button>
+              <Button variant="default">Rent Now</Button>
             </CardContent>
           </Card>
         </div>
@@ -110,7 +110,7 @@ export function LandingPage() {
               <Label htmlFor="message">Message</Label>
               <Textarea id="message" placeholder="Enter your message" rows={5} />
             </div>
-            <Button className="w-full" type="submit" variant="primary">
+            <Button className="w-full" type="submit" variant="default">
               Submit
             </Button>
           </form>

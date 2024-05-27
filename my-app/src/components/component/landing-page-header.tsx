@@ -1,5 +1,4 @@
 "use client";
-import { Toggle } from "@/components/ui/toggle";
 import ThemeSwitch from "./Theme-switch";
 
 export default function LandingPageHeader() {
@@ -36,7 +35,7 @@ export default function LandingPageHeader() {
   );
 }
 
-function MenuIcon(props) {
+function MenuIcon(props:String) {
   return (
     <svg
       {...props}
@@ -57,7 +56,7 @@ function MenuIcon(props) {
   );
 }
 
-function MoonIcon(props) {
+function MoonIcon(props:String) {
   return (
     <svg
       {...props}
