@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
+import LandingPageHeader from "@/components/component/landing-page-header";
+
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,7 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <LandingPageHeader />
+          {children}
+        </Providers>
       </body>
     </html>
   );

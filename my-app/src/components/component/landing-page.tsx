@@ -1,17 +1,14 @@
 import { Button } from "@/components/ui/button"
-
 import { CardContent, Card } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import LandingPageHeader from "./landing-page-header"
 
 
 
 export function LandingPage() {
   return (
     <div className="text-black">
-      <LandingPageHeader/>
       <section className="bg-gray-100 text-gray-900 py-20 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between dark:bg-gray-800 dark:text-gray-100">
         <div className="md:w-1/2 space-y-4">
           <h2 className="text-3xl font-bold">Discover the Best Boats for Your Adventure</h2>
@@ -142,7 +139,7 @@ export function LandingPage() {
   )
 }
 
-function ClockIcon(props) {
+function ClockIcon(props:{className:string;}) {
   return (
     <svg
       {...props}
@@ -163,7 +160,7 @@ function ClockIcon(props) {
 }
 
 
-function CompassIcon(props) {
+function CompassIcon(props:{className:string;}) {
   return (
     <svg
       {...props}
@@ -187,7 +184,7 @@ function CompassIcon(props) {
 
 
 
-function ShieldCheckIcon(props) {
+function ShieldCheckIcon(props:{className:string;}) {
   return (
     <svg
       {...props}
