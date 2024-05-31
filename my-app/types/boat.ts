@@ -8,6 +8,6 @@ export type Boat ={
     diameter: string;
     rooms: number;
     capacity: number; 
-    image: string;
+    images: string[];
     description: PortableTextBlock[];
 }

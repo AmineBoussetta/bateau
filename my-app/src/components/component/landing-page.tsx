@@ -4,11 +4,13 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { BoatCard } from "./boat-card"
 import { getBoats } from "../../../sanity/sanity-utils"
+import { BoatCardMultipleImages } from "./boat-card-multiple-images"
 
 
 
 export async function LandingPage() {
   const boats = await getBoats();
+  console.log(boats)
   return (
     <div className="text-black">
       <section className="bg-gray-100 text-gray-900 py-20 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between dark:bg-gray-800 dark:text-gray-100">

@@ -30,19 +30,14 @@ const boat ={
             type: 'number'
         },
         {
-            name: 'image',
-            title:'Image',
-            type: 'image',
+            name: 'images',
+            title: 'Images',
+            type: 'array',
+            of: [{ type: 'image' }],
             options: {
-                hotspot: true 
-            },
-            fields:[
-                {
-                    name: 'alt',
-                    title: 'Alt',
-                    type: 'string'
-                }
-            ]
+                layout: 'grid',
+                hotspot: true
+            }
         },
         {
             name: 'description',

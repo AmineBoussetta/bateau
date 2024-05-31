@@ -18,7 +18,7 @@ export async function getBoats(): Promise<Boat[]> {
         diameter,
         rooms,
         capacity,
-        "image": image.asset->url,
+        "images": images[].asset->url,
         description
 
     }`

@@ -1,36 +1,71 @@
-import Link from "next/link"
-import { Card } from "@/components/ui/card"
-import { Boat } from "../../../types/boat"
+"use client";
+import Link from "next/link";
+import { useState } from "react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Boat } from "../../../types/boat";
 
-export function BoatCard(data:Boat) {
+export function BoatCard(data: Boat) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const images = data.images;
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
+  const handleNextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
   return (
     <Card className="max-w-4xl mx-auto">
       <div className="grid md:grid-cols-2 gap-8 items-center p-4 md:p-6">
-        <img
-          alt="Sailboat"
-          className="rounded-lg object-cover w-full aspect-[16/10]"
-          height={500}
-          src={data.image}
-          width={800}
-        />
+        <div className="relative">
+          <img
+            alt="Sailboat"
+            className="rounded-lg object-cover w-full aspect-[16/10]"
+            height={500}
+            src={images[currentImageIndex]}
+            width={800}
+          />
+          <div className="absolute top-1/2 transform -translate-y-1/2 left-4 right-4 flex justify-between">
+            <Button variant="ghost" onClick={handlePrevImage}>
+              <ChevronLeftIcon className="h-6 w-6" />
+            </Button>
+            <Button variant="ghost" onClick={handleNextImage}>
+              <ChevronRightIcon className="h-6 w-6" />
+            </Button>
+          </div>
+        </div>
+
         <div className="grid gap-4">
           <h2 className="text-3xl font-bold">{data.name}</h2>
           <div className="grid gap-2">
             <div className="flex items-center gap-2">
               <RulerIcon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-              <span className="text-gray-500 dark:text-gray-400">Type: {data.type}</span>
+              <span className="text-gray-500 dark:text-gray-400">
+                Type: {data.type}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <RulerIcon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-              <span className="text-gray-500 dark:text-gray-400">Diameter: {data.diameter} ft</span>
+              <span className="text-gray-500 dark:text-gray-400">
+                Diameter: {data.diameter} ft
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <UserIcon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-              <span className="text-gray-500 dark:text-gray-400">Guests: {data.capacity}</span>
+              <span className="text-gray-500 dark:text-gray-400">
+                Guests: {data.capacity}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <BedIcon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-              <span className="text-gray-500 dark:text-gray-400">Rooms: {data.rooms}</span>
+              <span className="text-gray-500 dark:text-gray-400">
+                Rooms: {data.rooms}
+              </span>
             </div>
           </div>
           <div className="prose">
@@ -45,12 +80,10 @@ export function BoatCard(data:Boat) {
         </div>
       </div>
     </Card>
-  )
+  );
 }
 
-function BedIcon(props:{
-  className: string
-}) {
+function BedIcon(props: { className: string }) {
   return (
     <svg
       {...props}
@@ -69,13 +102,10 @@ function BedIcon(props:{
       <path d="M2 17h20" />
       <path d="M6 8v9" />
     </svg>
-  )
+  );
 }
 
-
-function RulerIcon(props:{
-  className: string
-}) {
+function RulerIcon(props: { className: string }) {
   return (
     <svg
       {...props}
@@ -95,13 +125,10 @@ function RulerIcon(props:{
       <path d="m8.5 6.5 2-2" />
       <path d="m17.5 15.5 2-2" />
     </svg>
-  )
+  );
 }
 
-
-function UserIcon(props:{
-  className: string
-}) {
+function UserIcon(props: { className: string }) {
   return (
     <svg
       {...props}
@@ -118,5 +145,43 @@ function UserIcon(props:{
       <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
       <circle cx="12" cy="7" r="4" />
     </svg>
-  )
+  );
+}
+
+function ChevronLeftIcon(props: { className: string }) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m15 18-6-6 6-6" />
+    </svg>
+  );
+}
+
+function ChevronRightIcon(props: { className: string }) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  );
 }
