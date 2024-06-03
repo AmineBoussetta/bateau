@@ -1,10 +1,11 @@
 "use client";
-import Link from "next/link";
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Boat } from "../../../types/boat";
 import { BookingForm } from "./booking-form";
+import { PortableText } from "next-sanity";
+
 
 export function BoatCard(data: Boat) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -68,11 +69,14 @@ export function BoatCard(data: Boat) {
                 Rooms: {data.rooms}
               </span>
             </div>
+            <div>
+             <PortableText value={data.description}/>
+            </div>
           </div>
           <div className="prose">
             <p />
           </div>
-          <BookingForm/>
+          <BookingForm boat={data.name}/>
 
           {/* <Link
             className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"

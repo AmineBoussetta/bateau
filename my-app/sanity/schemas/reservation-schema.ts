@@ -1,43 +1,85 @@
 import { Rule } from '@sanity/types';
 
 
+
+
 const reservation = {
     name: 'reservation',
     title: 'Reservations',
     type: 'document',
     fields:[
         {
+            name:"boatName",
+            title:"Boat",
+            type: 'string',
+            readOnly: true
+        },
+        {
             name:'name',
             title: 'Name',
-            type: 'string'
+            type: 'string',
+            readOnly: true
         },
         {
-            name: 'lastName',
-            title: 'Last name',
-            type: 'string'
-        },
-        {
-            name: 'phoneNumber',
+            name: 'phone',
             title:'Phone number',
-            type:'number'
+            type:'number',
+            readOnly: true
         },
         {
-            name: 'reservationDate',
+            name: 'date',
             title: 'Reservation Date',
-            type: 'date'
+            type: 'date',
+            readOnly: true
         },
         {
-            name: 'passangersNumber',
-            title: 'Passangers number',
-            type: 'number'
+            name: "time",
+            title: "Start Time",
+            type: "string",
+            readOnly: true
+        },
+        {
+            name: 'guests',
+            title: 'Guests',
+            type: 'number',
+            readOnly: true
         },
         {
             name: 'email',
             title: 'Email',
             type: 'string',
-            validation: (Rule: Rule) => Rule.email()
+            validation: (Rule: Rule) => Rule.email(),
+            readOnly: true
+        },
+        {
+            name: 'isValidEmail',
+            title: "Email Verification",
+            type: "boolean",
+            readOnly: true,
+            initialValue: false
+        },
+        {
+            name: 'message',
+            Title: 'Message',
+            type: 'string',
+            readOnly: true
+        },
+        {
+            name: 'isAccepted',
+            title: 'Accept The Reservation',
+            type: "boolean", 
+            initialValue: false
         }
-    ]
+    ],
+    permissions: [
+        // Permissions for roles
+        {
+          role: 'editor',
+          // Editor role can create, read, update, and delete reservation documents
+          permissions: ['create', 'read', 'update', 'delete']
+        },
+        // Define more roles and permissions as needed
+      ]
 }
 
 export default reservation;
