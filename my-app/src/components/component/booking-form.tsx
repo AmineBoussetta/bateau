@@ -36,24 +36,22 @@ export function BookingForm() {
               <Input id="date" type="date" />
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="start-time">Start Time</Label>
               <Input id="start-time" type="time" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="duration">Duration</Label>
-              <Input id="duration" max="4" min="1" placeholder="Hours" type="number" />
-            </div>
-            <div className="space-y-2">
               <Label htmlFor="guests">Guests</Label>
-              <Input id="guests" max="10" min="1" placeholder="Number of guests" type="number" />
+              <Input id="guests" type="number" min="1" max="10" placeholder="Number of guests" />
             </div>
           </div>
+          <div className="text-sm text-gray-500 dark:text-gray-400">The rental period is four hours.</div>
           <div className="space-y-2">
             <Label htmlFor="message">Message</Label>
             <Textarea className="min-h-[100px]" id="message" placeholder="Enter any additional details" />
           </div>
+          
           <DialogFooter>
             <Button type="submit">Submit</Button>
           </DialogFooter>
