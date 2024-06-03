@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { BoatCard } from "./boat-card"
 import { getBoats } from "../../../sanity/sanity-utils"
-import { BoatCardMultipleImages } from "./boat-card-multiple-images"
 
 
 

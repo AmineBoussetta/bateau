@@ -1,117 +1,64 @@
-import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@/components/ui/select"
-import { AlertDescription, Alert } from "@/components/ui/alert"
-import { Button } from "../ui/button"
-
+import { Button } from "@/components/ui/button"
+import { DialogTrigger, DialogTitle, DialogDescription, DialogHeader, DialogFooter, DialogContent, Dialog } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 
 export function BookingForm() {
   return (
-    <div className=" mt-10 max-w-md mx-auto p-6 bg-white rounded-lg shadow-md dark:bg-gray-800 ">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-2">Boat Reservation</h1>
-        <p className="text-gray-500 dark:text-gray-400">Reserve your boat for an unforgettable day on the water.</p>
-      </div>
-      <form className="space-y-4">
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300" htmlFor="name">
-            Name
-          </label>
-          <input
-            className="w-full px-3 py-2 border  border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700  dark:text-white dark:border-gray-800"
-            id="name"
-            placeholder="Enter your name"
-            required
-            type="text"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300" htmlFor="phone">
-            Phone Number
-          </label>
-          <input
-            className="w-full px-3 py-2 border  border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700  dark:text-white dark:border-gray-800"
-            id="phone"
-            placeholder="Enter your phone number"
-            required
-            type="tel"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300" htmlFor="date">
-            Reservation Date
-          </label>
-          <input
-            className="w-full px-3 py-2 border  border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700  dark:text-white dark:border-gray-800"
-            id="date"
-            required
-            type="date"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300" htmlFor="time">
-            Reservation Time
-          </label>
-          <div className="flex gap-2">
-            <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Start Time" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="8">8:00</SelectItem>
-                <SelectItem value="9">9:00</SelectItem>
-                <SelectItem value="10">10:00</SelectItem>
-                <SelectItem value="11">11:00</SelectItem>
-                <SelectItem value="12">12:00</SelectItem>
-                <SelectItem value="13">13:00</SelectItem>
-                <SelectItem value="14">14:00</SelectItem>
-                <SelectItem value="15">15:00</SelectItem>
-                <SelectItem value="16">16:00</SelectItem>
-                <SelectItem value="17">17:00</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="End Time" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="9">9:00</SelectItem>
-                <SelectItem value="10">10:00</SelectItem>
-                <SelectItem value="11">11:00</SelectItem>
-                <SelectItem value="12">12:00</SelectItem>
-                <SelectItem value="13">13:00</SelectItem>
-                <SelectItem value="14">14:00</SelectItem>
-                <SelectItem value="15">15:00</SelectItem>
-                <SelectItem value="16">16:00</SelectItem>
-                <SelectItem value="17">17:00</SelectItem>
-                <SelectItem value="18">18:00</SelectItem>
-              </SelectContent>
-            </Select>
+    <Dialog defaultOpen={false}>
+      <DialogTrigger asChild className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300">
+        <Button variant="outline">Rent Now</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-auto">
+        <DialogHeader>
+          <DialogTitle>Book Your Reservation</DialogTitle>
+          <DialogDescription>Fill out the form below to reserve your spot.</DialogDescription>
+        </DialogHeader>
+        <form className="grid gap-4 py-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="name">Name</Label>
+              <Input id="name" placeholder="Enter your name" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone">Phone</Label>
+              <Input id="phone" placeholder="Enter your phone number" type="tel" />
+            </div>
           </div>
-        </div>
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300" htmlFor="guests">
-            Number of Guests
-          </label>
-          <input
-            className="w-full px-3 py-2 border  border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700  dark:text-white dark:border-gray-800"
-            id="guests"
-            min="1"
-            placeholder="Enter the number of guests"
-            required
-            type="number"
-          />
-        </div>
-        <Button
-          variant = "default"
-          type="submit"
-        >
-          Reserve
-        </Button>
-      </form>
-      <div className="mt-4">
-        <Alert variant="default">
-          <AlertDescription>The minimum reservation duration must be greater than 4 hours.</AlertDescription>
-        </Alert>
-      </div>
-    </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input id="email" placeholder="Enter your email" type="email" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="date">Reservation Date</Label>
+              <Input id="date" type="date" />
+            </div>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="start-time">Start Time</Label>
+              <Input id="start-time" type="time" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="duration">Duration</Label>
+              <Input id="duration" max="4" min="1" placeholder="Hours" type="number" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="guests">Guests</Label>
+              <Input id="guests" max="10" min="1" placeholder="Number of guests" type="number" />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="message">Message</Label>
+            <Textarea className="min-h-[100px]" id="message" placeholder="Enter any additional details" />
+          </div>
+          <DialogFooter>
+            <Button type="submit">Submit</Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
   )
 }

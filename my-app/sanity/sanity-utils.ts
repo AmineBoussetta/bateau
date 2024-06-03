@@ -7,6 +7,7 @@ export async function getBoats(): Promise<Boat[]> {
     projectId: "uhxnui9c",
     dataset: "production",
     apiVersion: "2024-05-28",
+    useCdn: false,
   });
 
   return client.fetch(
