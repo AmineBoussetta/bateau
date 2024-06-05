@@ -4,6 +4,7 @@ import clientConfig from "./config/client-config";
 import SanityClient from "next-sanity-client";
 import { Reservation } from "../types/reservation";
 import { Client } from "../types/client";
+import { Contact } from "../types/Contact";
 
 export async function getBoats(): Promise<Boat[]> {
   const client = new SanityClient(clientConfig);
@@ -79,6 +80,7 @@ export const verifyReservation = async (id: string) => {
     throw error;
   }
 };
+
 export async function createReservation(
   data: Reservation
 ): Promise<Reservation> {
@@ -91,6 +93,25 @@ export async function createReservation(
     };
 
     const response: Reservation = await client.create<Reservation>(document);
+    return response;
+  } catch (error: any) {
+    console.error("Error creating reservation:", error.message);
+    throw error;
+  }
+}
+
+export async function createMessage(
+  data: Contact
+): Promise<Contact> {
+  const client = createClient(clientConfig);
+
+  try {
+    const document = {
+      _type: "message",
+      ...data,
+    };
+
+    const response: Contact = await client.create<Contact>(document);
     return response;
   } catch (error: any) {
     console.error("Error creating reservation:", error.message);
