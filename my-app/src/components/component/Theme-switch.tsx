@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { FiSun, FiMoon } from "react-icons/fi"
 import { useState, useEffect } from 'react'
