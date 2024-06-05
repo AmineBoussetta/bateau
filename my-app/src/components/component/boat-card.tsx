@@ -1,12 +1,26 @@
+'use client';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Boat } from "../../../types/boat";
 import { BookingForm } from "./booking-form";
 import { PortableText } from "next-sanity";
+import { useState } from "react";
 
 
 export function BoatCard(data: Boat) {
-  
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? data.images.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === data.images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
 
   return (
     <Card className="max-w-4xl mx-auto">
@@ -16,14 +30,14 @@ export function BoatCard(data: Boat) {
             alt="Sailboat"
             className="rounded-lg object-cover w-full aspect-[16/10]"
             height={500}
-            src={data.images[0]}
+            src={data.images[currentImageIndex]}
             width={800}
           />
           <div className="absolute top-1/2 transform -translate-y-1/2 left-4 right-4 flex justify-between">
-            <Button variant="ghost" >
+            <Button variant="ghost" onClick={handlePrevImage}>
               <ChevronLeftIcon className="h-6 w-6" />
             </Button>
-            <Button variant="ghost" >
+            <Button variant="ghost" onClick={handleNextImage}>
               <ChevronRightIcon className="h-6 w-6" />
             </Button>
           </div>
