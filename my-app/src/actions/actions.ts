@@ -25,7 +25,7 @@ export async function UpFrom(boat: string, formData: FormData) {
     isAccepted: false,
   };
   try {
-    createReservation(reservation).then((reservation: Reservation) => {
+    await createReservation(reservation).then((reservation: Reservation) => {
       getClient(reservation.name).then((value: Client) => {
         send(reservation, `${url}/verify/${value?._id}`);
       });

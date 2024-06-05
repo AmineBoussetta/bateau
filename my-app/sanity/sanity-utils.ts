@@ -46,15 +46,20 @@ export async function getClient(name: string): Promise<Client> {
 
 export async function getClients(): Promise<Client[]> {
   const client = new SanityClient(clientConfig);
-  return client.fetch({
-    query: `*[_type == "reservation"]{
-      _id,
-      
-    }`,
-    config: {
-      cache: "no-cache",
-    },
-  });
+  try {
+    return client.fetch({
+      query: `*[_type == "reservation"]{
+        _id,
+        
+      }`,
+      config: {
+        cache: "no-cache",
+      },
+    });
+  } catch (error) {
+    console.log("error creating client: ", error);
+    throw error;
+  }
 }
 
 export const getReservationById = async (id: string) => {
@@ -63,7 +68,7 @@ export const getReservationById = async (id: string) => {
     const reservation = await client.getDocument(id);
     return reservation;
   } catch (error) {
-    console.error('Error fetching reservation:', error);
+    console.error("Error fetching reservation:", error);
     throw error;
   }
 };
@@ -71,12 +76,13 @@ export const getReservationById = async (id: string) => {
 export const verifyReservation = async (id: string) => {
   const client = createClient(clientConfig);
   try {
-    const updatedReservation = await client.patch(id)
+    const updatedReservation = await client
+      .patch(id)
       .set({ isValidEmail: true })
       .commit();
     return updatedReservation;
   } catch (error) {
-    console.error('Error verifying reservation:', error);
+    console.error("Error verifying reservation:", error);
     throw error;
   }
 };
@@ -85,7 +91,6 @@ export async function createReservation(
   data: Reservation
 ): Promise<Reservation> {
   const client = createClient(clientConfig);
-
   try {
     const document = {
       _type: "reservation",
@@ -100,9 +105,7 @@ export async function createReservation(
   }
 }
 
-export async function createMessage(
-  data: Contact
-): Promise<Contact> {
+export async function createMessage(data: Contact): Promise<Contact> {
   const client = createClient(clientConfig);
 
   try {
@@ -114,7 +117,7 @@ export async function createMessage(
     const response: Contact = await client.create<Contact>(document);
     return response;
   } catch (error: any) {
-    console.error("Error creating reservation:", error.message);
+    console.error("Error creating message:", error.message);
     throw error;
   }
 }
