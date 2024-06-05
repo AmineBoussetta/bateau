@@ -6,6 +6,7 @@ export async function LandingPage() {
   const boats = await getBoats();
   return (
     <div className="text-black">
+      
       <section className="bg-gray-100 text-gray-900 py-20 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between dark:bg-gray-800 dark:text-gray-100">
         <div className="md:w-1/2 space-y-4">
           <h2 className="text-3xl font-bold">

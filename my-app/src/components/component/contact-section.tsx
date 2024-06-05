@@ -1,21 +1,12 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { createMessage } from "../../../sanity/sanity-utils";
-import { Contact } from "../../../types/Contact";
+import { SendMessage } from "@/actions/actions";
+import { toast } from "react-toastify";
 
 export default function ContactSection() {
-  async function upForm(formData: FormData) {
-    'use server';
-    const data: Contact = {
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
-      message: formData.get("message") as string,
-    };
-    createMessage(data);
-  }
-
   return (
     <section
       className="bg-white py-20 px-6 md:px-12 dark:bg-gray-900 dark:text-gray-100"
@@ -23,7 +14,16 @@ export default function ContactSection() {
     >
       <h2 className="text-3xl font-bold text-center mb-12">Get in Touch</h2>
       <div className="max-w-md mx-auto">
-        <form action={upForm}>
+        <form
+          action={async (formData: FormData) => {
+            const result = await SendMessage(formData);
+            if (result?.error) {
+              toast.error(result.error);
+            } else {
+              toast.success("Message sent successfully!");
+            }
+          }}
+        >
           <div className="mb-4">
             <Label htmlFor="name">Name</Label>
             <Input

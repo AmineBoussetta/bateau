@@ -1,10 +1,15 @@
 "use server";
 
 import { send } from "@/app/api/contact";
-import { createReservation, getClient } from "../../sanity/sanity-utils";
+import {
+  createMessage,
+  createReservation,
+  getClient,
+} from "../../sanity/sanity-utils";
 import { Reservation } from "../../types/reservation";
 import { Client } from "../../types/client";
 import { url } from "@/lib/constants";
+import { Contact } from "../../types/Contact";
 
 export async function UpFrom(boat: string, formData: FormData) {
   const reservation: Reservation = {
@@ -25,6 +30,21 @@ export async function UpFrom(boat: string, formData: FormData) {
         send(reservation, `${url}/verify/${value?._id}`);
       });
     });
+  } catch (error) {
+    return {
+      error: "Something went wrong!",
+    };
+  }
+}
+
+export async function SendMessage(formData: FormData) {
+  const data: Contact = {
+    name: formData.get("name") as string,
+    email: formData.get("email") as string,
+    message: formData.get("message") as string,
+  };
+  try {
+    await createMessage(data);
   } catch (error) {
     return {
       error: "Something went wrong!",

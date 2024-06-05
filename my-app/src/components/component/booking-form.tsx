@@ -15,14 +15,12 @@ import { Textarea } from "@/components/ui/textarea";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { UpFrom } from "@/actions/actions";
-import { useFormState } from "react-dom";
 
 interface BookingFormProps {
   boat: string;
 }
 
 export function BookingForm(boat: BookingFormProps) {
-  const notify = () => toast("Please verify your email");
   const UpFormWithBoatName = UpFrom.bind(null, boat.boat);
 
   return (
