@@ -1,3 +1,4 @@
+"use client";
 import {
   Dialog,
   DialogTrigger,
@@ -11,36 +12,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Reservation } from "../../../types/reservation";
-import { createReservation, getClient } from "../../../sanity/sanity-utils";
-import { send } from "@/app/api/contact";
-import { Client } from "../../../types/client";
-import { url } from "@/lib/constants";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+import { UpFrom } from "@/actions/actions";
+import { useFormState } from "react-dom";
 
 interface BookingFormProps {
   boat: string;
 }
 
 export function BookingForm(boat: BookingFormProps) {
-  async function UpFrom(formData: FormData) {
-    "use server";
-    const reservation: Reservation = {
-      boatName: boat.boat, // Set boatName based on your requirement
-      name: formData.get("name") as string,
-      phone: parseInt(formData.get("phone") as string),
-      date: formData.get("date") as string,
-      time: formData.get("time") as string,
-      guests: parseInt(formData.get("guests") as string),
-      email: formData.get("email") as string,
-      isValidEmail: false,
-      message: formData.get("message") as string,
-      isAccepted: false, // Set initial value as needed
-    };
-    createReservation(reservation);
-    getClient(reservation.name).then((value: Client) => {
-      send(reservation, `${url}/verify/${value._id}`);
-    });
-  }
+  const notify = () => toast("Please verify your email");
+  const UpFormWithBoatName = UpFrom.bind(null, boat.boat);
 
   return (
     <Dialog defaultOpen={false}>
@@ -66,7 +49,15 @@ export function BookingForm(boat: BookingFormProps) {
             Fill out the form below to reserve your spot.
           </DialogDescription>
         </DialogHeader>
-        <form className="grid gap-4 py-4" action={UpFrom}>
+        <form className="grid gap-4 py-4" action={async (formData:FormData)=>{
+          const result = await UpFormWithBoatName(formData);
+          if (result?.error){
+              toast.error(result.error);
+          }else{
+            toast.success("Please verify your email")
+          }
+          
+        }}>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
@@ -156,6 +147,7 @@ export function BookingForm(boat: BookingFormProps) {
           </DialogFooter>
         </form>
       </DialogContent>
+      <ToastContainer />
     </Dialog>
   );
 }

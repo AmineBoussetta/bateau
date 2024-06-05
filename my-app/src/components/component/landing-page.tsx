@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { BoatCard } from "./boat-card";
 import { getBoats } from "../../../sanity/sanity-utils";
 import ContactSection from "./contact-section";
