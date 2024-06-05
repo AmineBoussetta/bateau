@@ -5,8 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { SendMessage } from "@/actions/actions";
 import { toast } from "react-toastify";
+import { useRef } from "react";
 
 export default function ContactSection() {
+  const ref = useRef<HTMLFormElement>(null);
   return (
     <section
       className="bg-white py-20 px-6 md:px-12 dark:bg-gray-900 dark:text-gray-100"
@@ -15,12 +17,14 @@ export default function ContactSection() {
       <h2 className="text-3xl font-bold text-center mb-12">Get in Touch</h2>
       <div className="max-w-md mx-auto">
         <form
+          ref={ref}
           action={async (formData: FormData) => {
             const result = await SendMessage(formData);
             if (result?.error) {
               toast.error(result.error);
             } else {
               toast.success("Message sent successfully!");
+              ref.current?.reset();
             }
           }}
         >

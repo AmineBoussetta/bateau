@@ -15,12 +15,14 @@ import { Textarea } from "@/components/ui/textarea";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { UpFrom } from "@/actions/actions";
+import { useRef } from "react";
 
 interface BookingFormProps {
   boat: string;
 }
 
 export function BookingForm(boat: BookingFormProps) {
+  const ref = useRef<HTMLFormElement>(null)
   const UpFormWithBoatName = UpFrom.bind(null, boat.boat);
 
   return (
@@ -47,12 +49,13 @@ export function BookingForm(boat: BookingFormProps) {
             Fill out the form below to reserve your spot.
           </DialogDescription>
         </DialogHeader>
-        <form className="grid gap-4 py-4" action={async (formData:FormData)=>{
+        <form ref={ref} className="grid gap-4 py-4" action={async (formData:FormData)=>{
           const result = await UpFormWithBoatName(formData);
           if (result?.error){
               toast.error(result.error);
           }else{
             toast.success("Please verify your email")
+            ref.current?.reset()
           }
           
         }}>
