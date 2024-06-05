@@ -1,5 +1,3 @@
-"use client";
-import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Boat } from "../../../types/boat";
@@ -8,18 +6,7 @@ import { PortableText } from "next-sanity";
 
 
 export function BoatCard(data: Boat) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = data.images;
-  const handlePrevImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
-  };
-  const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
-    );
-  };
+  
 
   return (
     <Card className="max-w-4xl mx-auto">
@@ -29,14 +16,14 @@ export function BoatCard(data: Boat) {
             alt="Sailboat"
             className="rounded-lg object-cover w-full aspect-[16/10]"
             height={500}
-            src={images[currentImageIndex]}
+            src={data.images[0]}
             width={800}
           />
           <div className="absolute top-1/2 transform -translate-y-1/2 left-4 right-4 flex justify-between">
-            <Button variant="ghost" onClick={handlePrevImage}>
+            <Button variant="ghost" >
               <ChevronLeftIcon className="h-6 w-6" />
             </Button>
-            <Button variant="ghost" onClick={handleNextImage}>
+            <Button variant="ghost" >
               <ChevronRightIcon className="h-6 w-6" />
             </Button>
           </div>
@@ -69,21 +56,14 @@ export function BoatCard(data: Boat) {
                 Rooms: {data.rooms}
               </span>
             </div>
-            <div>
-             <PortableText value={data.description}/>
+            <div  className="w-[300px] break-words">
+             <PortableText value={data.description}  />
             </div>
           </div>
           <div className="prose">
             <p />
           </div>
-          <BookingForm boat={data.name}/>
-
-          {/* <Link
-            className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-            href="#"
-          >
-            Rent Now
-          </Link> */}
+          <BookingForm boat={data.name} key={data._id}/>
         </div>
       </div>
     </Card>

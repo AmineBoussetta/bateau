@@ -1,5 +1,3 @@
-"use client"
-import { useState, FormEvent, ChangeEvent } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -14,65 +12,51 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Reservation } from "../../../types/reservation";
-import { createReservation } from "../../../sanity/sanity-utils";
+import { createReservation, getClient } from "../../../sanity/sanity-utils";
+import { send } from "@/app/api/contact";
+import { Client } from "../../../types/client";
+import { url } from "@/lib/constants";
 
 interface BookingFormProps {
   boat: string;
 }
 
 export function BookingForm(boat: BookingFormProps) {
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    date: "",
-    startTime: "",
-    guests: "",
-    message: "",
-  });
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  async function UpFrom(formData: FormData) {
+    "use server";
     const reservation: Reservation = {
       boatName: boat.boat, // Set boatName based on your requirement
-      name: formData.name,
-      phone: parseInt(formData.phone),
-      date: formData.date,
-      time: formData.startTime,
-      guests: parseInt(formData.guests),
-      email: formData.email,
+      name: formData.get("name") as string,
+      phone: parseInt(formData.get("phone") as string),
+      date: formData.get("date") as string,
+      time: formData.get("time") as string,
+      guests: parseInt(formData.get("guests") as string),
+      email: formData.get("email") as string,
       isValidEmail: false,
-      message: formData.message,
+      message: formData.get("message") as string,
       isAccepted: false, // Set initial value as needed
     };
     createReservation(reservation);
-    setFormData({
-      name: "",
-      phone: "",
-      email: "",
-      date: "",
-      startTime: "",
-      guests: "",
-      message: "",
+    getClient(reservation.name).then((value: Client) => {
+      send(reservation, `${url}/verify/${value._id}`);
     });
-  };
+  }
 
   return (
     <Dialog defaultOpen={false}>
-      <DialogTrigger
-        asChild
-        className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-      >
-        <Button variant="outline">Rent Now</Button>
+      <DialogTrigger asChild>
+        <Button
+          className="inline-flex h-10 items-center justify-center rounded-md
+        bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow
+        transition-colors hover:bg-gray-900/90 focus-visible:outline-none
+        focus-visible:ring-1 focus-visible:ring-gray-950 hover:text-white
+        disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50
+        dark:text-gray-900 dark:hover:bg-gray-50/90
+        dark:focus-visible:ring-gray-300"
+          variant="outline"
+        >
+          Rent Now
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-auto">
         <DialogHeader>
@@ -82,25 +66,27 @@ export function BookingForm(boat: BookingFormProps) {
             Fill out the form below to reserve your spot.
           </DialogDescription>
         </DialogHeader>
-        <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
+        <form className="grid gap-4 py-4" action={UpFrom}>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
               <Input
                 id="name"
+                name="name"
                 placeholder="Enter your name"
-                value={formData.name}
-                onChange={handleChange}
+                defaultValue=""
+                required
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">Phone</Label>
               <Input
                 id="phone"
+                name="phone"
                 placeholder="Enter your phone number"
                 type="tel"
-                value={formData.phone}
-                onChange={handleChange}
+                defaultValue=""
+                required
               />
             </div>
           </div>
@@ -109,19 +95,21 @@ export function BookingForm(boat: BookingFormProps) {
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
+                name="email"
                 placeholder="Enter your email"
                 type="email"
-                value={formData.email}
-                onChange={handleChange}
+                defaultValue=""
+                required
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="date">Reservation Date</Label>
               <Input
                 id="date"
+                name="date"
                 type="date"
-                value={formData.date}
-                onChange={handleChange}
+                defaultValue=""
+                required
               />
             </div>
           </div>
@@ -130,20 +118,22 @@ export function BookingForm(boat: BookingFormProps) {
               <Label htmlFor="startTime">Start Time</Label>
               <Input
                 id="startTime"
+                name="time"
                 type="time"
-                value={formData.startTime}
-                onChange={handleChange}
+                defaultValue=""
+                required
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="guests">Guests</Label>
               <Input
                 id="guests"
+                name="guests"
                 type="number"
                 min="1"
                 placeholder="Number of guests"
-                value={formData.guests}
-                onChange={handleChange}
+                defaultValue=""
+                required
               />
             </div>
           </div>
@@ -155,9 +145,9 @@ export function BookingForm(boat: BookingFormProps) {
             <Textarea
               className="min-h-[100px]"
               id="message"
+              name="message"
               placeholder="Enter any additional details"
-              value={formData.message}
-              onChange={handleChange}
+              defaultValue=""
             />
           </div>
 
