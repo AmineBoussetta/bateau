@@ -61,7 +61,7 @@ const reservation = {
         {
             name: 'message',
             Title: 'Message',
-            type: 'string',
+            type: 'text',
             readOnly: true
         },
         {

@@ -21,7 +21,7 @@ const message = {
         {
             name: 'message', 
             title: 'Message',
-            type: 'string',
+            type: 'text',
             readOnly: true
         }
     ]
