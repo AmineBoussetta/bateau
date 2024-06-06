@@ -29,6 +29,7 @@ export async function getBoats(): Promise<Boat[]> {
 
 export async function getClient(name: string): Promise<Client> {
   const client = new SanityClient(clientConfig);
+  try{
 
   return client.fetch({
     query: `*[_type == "reservation" && name == $name ][0]{
@@ -42,6 +43,10 @@ export async function getClient(name: string): Promise<Client> {
       cache: "no-cache",
     },
   });
+  }catch (error) {
+    console.log("error fetching client: ", error);
+    throw error;
+  }
 }
 
 export async function getClients(): Promise<Client[]> {
@@ -57,7 +62,7 @@ export async function getClients(): Promise<Client[]> {
       },
     });
   } catch (error) {
-    console.log("error creating client: ", error);
+    console.log("error fetching clients: ", error);
     throw error;
   }
 }
