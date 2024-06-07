@@ -18,8 +18,8 @@ export async function sendAcceptMail(data: Reservation) {
   await sendMail({
     to: data.email,
     name: data.name,
-    subject: "Verify your email",
-    body: "reservation accepter",
+    subject: "Reservation accepter",
+    body: "Your boat reservation accepter",
   });
 }
 
