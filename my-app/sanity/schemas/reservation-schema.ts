@@ -85,7 +85,7 @@ const reservation = {
           name: 'name',
           date: 'date'
         },
-        prepare(selection:{name: string; date :string;}) {
+        prepare(selection:{name: string; date: Date;}) {
           const {name, date} = selection
           return {
             title: name,
