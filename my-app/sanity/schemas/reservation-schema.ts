@@ -1,4 +1,5 @@
 import { Rule } from '@sanity/types';
+import { Reservation } from '../../types/reservation';
 
 
 
@@ -85,11 +86,10 @@ const reservation = {
           name: 'name',
           date: 'date'
         },
-        prepare(selection:{name: string; date: Date;}) {
-          const {name, date} = selection
+        prepare(selection:Reservation) {
           return {
-            title: name,
-            subtitle: date,
+            title: selection.name,
+            subtitle: selection.date,
           }
         }
     }
