@@ -14,7 +14,6 @@ const mail ={
             title: 'Email',
             type: 'string',
             validation: (Rule: Rule) => Rule.email(),
-            readOnly: true
         },
     ]
 }
