@@ -2,7 +2,7 @@ import { Rule } from '@sanity/types';
 
 const message = {
     name: 'message',
-    title: 'messages',
+    title: 'Messages',
     type: 'document',
     fields: [
         {

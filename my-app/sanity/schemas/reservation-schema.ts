@@ -79,7 +79,20 @@ const reservation = {
           permissions: ['create', 'read', 'update', 'delete']
         },
         // Define more roles and permissions as needed
-      ]
+      ],
+      preview: {
+        select: {
+          name: 'name',
+          date: 'date'
+        },
+        prepare(selection:{name: string; date :string;}) {
+          const {name, date} = selection
+          return {
+            title: name,
+            subtitle: date,
+          }
+        }
+    }
 }
 
 export default reservation;
