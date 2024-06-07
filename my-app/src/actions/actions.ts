@@ -1,10 +1,11 @@
 "use server";
 
-import { send } from "@/app/api/contact";
+import { sendReservationMail, sendToAdminsMail } from "@/app/api/contact";
 import {
   createMessage,
   createReservation,
   getClient,
+  getMails,
 } from "../../sanity/sanity-utils";
 import { Reservation } from "../../types/reservation";
 import { Client } from "../../types/client";
@@ -12,6 +13,7 @@ import { url } from "@/lib/constants";
 import { Contact } from "../../types/Contact";
 
 export async function UpFrom(boat: string, formData: FormData) {
+  const mails = await getMails();
   const reservation: Reservation = {
     boatName: boat,
     name: formData.get("name") as string,
@@ -27,7 +29,10 @@ export async function UpFrom(boat: string, formData: FormData) {
   try {
     await createReservation(reservation).then((reservation: Reservation) => {
       getClient(reservation.name).then((value: Client) => {
-        send(reservation, `${url}/verify/${value?._id}`);
+        sendReservationMail(reservation, `${url}/verify/${value?._id}`);
+        mails.map((data) => {
+          sendToAdminsMail(data);
+        });
       });
     });
   } catch (error) {

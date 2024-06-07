@@ -5,6 +5,7 @@ import SanityClient from "next-sanity-client";
 import { Reservation } from "../types/reservation";
 import { Client } from "../types/client";
 import { Contact } from "../types/Contact";
+import { Mail } from "../types/mail";
 
 export async function getBoats(): Promise<Boat[]> {
   const client = new SanityClient(clientConfig);
@@ -127,6 +128,24 @@ export async function createMessage(data: Contact): Promise<Contact> {
     return response;
   } catch (error: any) {
     console.error("Error creating message:", error.message);
+    throw error;
+  }
+}
+
+export async function getMails(): Promise<Mail[]> {
+  const client = new SanityClient(clientConfig);
+  try {
+    return client.fetch({
+      query: `*[_type == "mails"]{
+        name,
+        email,
+      }`,
+      config: {
+        cache: "no-cache",
+      },
+    });
+  } catch (error) {
+    console.log("error fetching mails: ", error);
     throw error;
   }
 }
