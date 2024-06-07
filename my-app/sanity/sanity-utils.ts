@@ -72,16 +72,18 @@ export async function getClients(): Promise<Client[]> {
   }
 }
 
-export const getReservationById = async (id: string) => {
+export const getReservationById = async (id: string):Promise<Reservation> => {
   const client = createClient(clientConfig);
   try {
-    const reservation = await client.getDocument(id);
-    return reservation;
+    const reservation = await client.getDocument(id) as Reservation;
+    return reservation ;
   } catch (error) {
     console.error("Error fetching reservation:", error);
     throw error;
   }
 };
+
+ 
 
 export const verifyReservation = async (id: string) => {
   const client = createClient(clientConfig);
@@ -96,6 +98,50 @@ export const verifyReservation = async (id: string) => {
     throw error;
   }
 };
+
+export const verifySendingMail = async (id: string) => {
+  const client = createClient(clientConfig);
+  try {
+    const updatedReservation = await client
+      .patch(id)
+      .set({ sended: true })
+      .commit();
+    return updatedReservation;
+  } catch (error) {
+    console.error("Error verifying reservation:", error);
+    throw error;
+  }
+};
+
+export async function getReservationDataById(id: string): Promise<Reservation>{
+  const client = new SanityClient(clientConfig);
+
+  try {
+    return client.fetch({
+      query: `*[_type == "boat" && _id == $id ][0]{
+      _id,
+      _createdAt,
+      name,
+      type,
+      diameter,
+      rooms,
+      capacity,
+      "images": images[].asset->url,
+      description
+    }`,
+    params:{
+      id: id
+    }
+    ,
+      config: {
+        cache: "no-cache",
+      },
+    });
+  } catch (error) {
+    console.log("error fetching boats: ", error);
+    throw error;
+  }
+}
 
 export async function createReservation(
   data: Reservation

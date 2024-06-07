@@ -9,4 +9,5 @@ export type Reservation = {
   isValidEmail: boolean;
   message:string;
   isAccepted: boolean;
+  sended: boolean;
 }

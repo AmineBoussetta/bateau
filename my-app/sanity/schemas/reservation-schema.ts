@@ -1,5 +1,7 @@
-import { Rule } from '@sanity/types';
+import { Rule, ValidationContext } from '@sanity/types';
 import { Reservation } from '../../types/reservation';
+import { sendAcceptMail, sendReservationMail } from '@/app/api/contact';
+import { getReservationById, getReservationDataById, verifySendingMail } from '../sanity-utils';
 
 
 
@@ -69,7 +71,31 @@ const reservation = {
             name: 'isAccepted',
             title: 'Accept The Reservation',
             type: "boolean", 
-            initialValue: false
+            initialValue: false,
+            validation: (Rule: Rule) => Rule.custom(async (value: boolean, context: ValidationContext) => {
+                if (value) {
+                  try {
+                    
+                    const id = context.document?._id.split('.')[1] as string;
+                    
+                    await getReservationById(id).then((data: Reservation)=>{
+                        if (!data.sended){
+                            sendAcceptMail(data); // Pass the entire document to the sendEmail function
+                            verifySendingMail(id);
+                        }
+                    });
+                  } catch (error) {
+                    return 'Failed to send email';
+                  }
+                }
+                return true;
+              })
+        },{
+            name: 'sended',
+            title: 'sended',
+            type: "boolean",
+            initialValue: false,
+            hidden: true 
         }
     ],
     permissions: [
