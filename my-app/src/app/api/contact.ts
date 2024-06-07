@@ -18,7 +18,8 @@ export async function sendToAdminsMail(data:Mail){
     to:data.email,
     name: data.name,
     subject: "New reservation",
-    body:`<h1>You have a new reservation Request</h1>`
+    body:`<h1>You have a new reservation Request</h1>
+          < a href="bateau.vercel.app/admin" >You can check it here< /a >`
   })
 }
 
