@@ -25,6 +25,7 @@ export async function UpFrom(boat: string, formData: FormData) {
     isValidEmail: false,
     message: formData.get("message") as string,
     isAccepted: false,
+    sended: false
   };
   try {
     await createReservation(reservation).then((reservation: Reservation) => {
