@@ -83,14 +83,8 @@ const reservation = {
       ],
       preview: {
         select: {
-          name: 'name',
-          date: 'date'
-        },
-        prepare(selection:Reservation) {
-          return {
-            title: selection.name,
-            subtitle: selection.date,
-          }
+          title: 'name',
+          subtitle: 'date'
         }
     }
 }
