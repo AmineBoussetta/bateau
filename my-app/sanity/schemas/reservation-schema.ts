@@ -1,7 +1,7 @@
 import { Rule, ValidationContext } from '@sanity/types';
 import { Reservation } from '../../types/reservation';
-import { sendAcceptMail, sendReservationMail } from '@/app/api/contact';
-import { getReservationById, getReservationDataById, verifySendingMail } from '../sanity-utils';
+import { sendAcceptMail } from '@/app/api/contact';
+import { getReservationById, verifySendingMail } from '../sanity-utils';
 
 
 

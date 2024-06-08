@@ -25,12 +25,20 @@ export async function UpFrom(boat: string, formData: FormData) {
     isValidEmail: false,
     message: formData.get("message") as string,
     isAccepted: false,
-    sended: false
+    sended: false,
   };
   try {
     await createReservation(reservation).then((reservation: Reservation) => {
-      getClient(reservation.name).then((value: Client) => {
-        sendReservationMail(reservation, `${url}/verify/${value?._id}`);
+      getClient(reservation.name).then(async (value: Client) => {
+        try {
+          await sendReservationMail(reservation, `${url}/verify/${value?._id}`);
+        } catch (error) {
+          console.error("Error sending reservation email:", error);
+          return {
+            error: "Something went wrong!",
+          };
+        }
+
         mails.map((data) => {
           sendToAdminsMail(data);
         });
