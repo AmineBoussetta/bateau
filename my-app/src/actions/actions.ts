@@ -45,7 +45,7 @@ export async function UpFrom(boat: string, formData: FormData) {
     }
 
     mails.forEach((data) => {
-      sendToAdminsMail(data);
+      sendToAdminsMail(data, createdReservation);
     });
 
     return { success: true };

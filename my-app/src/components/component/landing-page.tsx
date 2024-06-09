@@ -1,12 +1,12 @@
 import { BoatCard } from "./boat-card";
 import { getBoats } from "../../../sanity/sanity-utils";
 import ContactSection from "./contact-section";
+import { FooterComponent } from "./footer-component";
 
 export async function LandingPage() {
   const boats = await getBoats();
   return (
     <div className="text-black">
-      
       <section className="bg-gray-100 text-gray-900 py-20 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between dark:bg-gray-800 dark:text-gray-100">
         <div className="md:w-1/2 space-y-4">
           <h2 className="text-3xl font-bold">
@@ -78,13 +78,7 @@ export async function LandingPage() {
         </div>
       </section>
       <ContactSection />
-      <footer className="bg-gray-100 text-gray-900 py-8 px-6 md:px-12 dark:bg-gray-800 dark:text-gray-100">
-        <div className="container mx-auto flex items-center justify-between">
-          <div className="flex items-center">
-            <p>© 2024 Boat Rental. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <FooterComponent />
     </div>
   );
 }

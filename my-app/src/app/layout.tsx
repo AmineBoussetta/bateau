@@ -5,8 +5,8 @@ import { Providers } from "./providers";
 
 
 export const metadata: Metadata = {
-  title: "luxury yacht sousse",
-  description: "ay 9olna salam",
+  title: "Yacht Rental",
+  description: "Yacht Rental",
 };
 
 export default function RootLayout({
