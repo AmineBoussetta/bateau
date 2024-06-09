@@ -8,7 +8,6 @@ import {
   getMails,
 } from "../../sanity/sanity-utils";
 import { Reservation } from "../../types/reservation";
-import { Client } from "../../types/client";
 import { url } from "@/lib/constants";
 import { Contact } from "../../types/Contact";
 
@@ -42,7 +41,7 @@ export async function UpFrom(boat: string, formData: FormData) {
     );
 
     if (result?.error) {
-      return result;
+      return { error: 'Something went wrong!' };
     }
 
     mails.forEach((data) => {

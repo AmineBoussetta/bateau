@@ -47,7 +47,7 @@ export function BookingForm(boat: BookingFormProps) {
           action={async (formData: FormData) => {
             await UpFormWithBoatName(formData).then((result) => {
               if (result?.error) {
-                toast.error(result.error);
+                toast.error(result?.error);
               } else {
                 toast.success("Please verify your email");
                 ref.current?.reset();
