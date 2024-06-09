@@ -16,21 +16,20 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { UpFrom } from "@/actions/actions";
 import { useRef } from "react";
+import { Result } from "postcss";
 
 interface BookingFormProps {
   boat: string;
 }
 
 export function BookingForm(boat: BookingFormProps) {
-  const ref = useRef<HTMLFormElement>(null)
+  const ref = useRef<HTMLFormElement>(null);
   const UpFormWithBoatName = UpFrom.bind(null, boat.boat);
 
   return (
     <Dialog defaultOpen={false}>
       <DialogTrigger asChild>
-        <Button
-          className="w-full" type="submit" variant="default"
-        >
+        <Button className="w-full" type="submit" variant="default">
           Rent Now
         </Button>
       </DialogTrigger>
@@ -42,16 +41,20 @@ export function BookingForm(boat: BookingFormProps) {
             Fill out the form below to reserve your spot.
           </DialogDescription>
         </DialogHeader>
-        <form ref={ref} className="grid gap-4 py-4" action={async (formData:FormData)=>{
-          const result = await UpFormWithBoatName(formData);
-          if (result?.error){
-              toast.error(result.error);
-          }else{
-            toast.success("Please verify your email")
-            ref.current?.reset()
-          }
-          
-        }}>
+        <form
+          ref={ref}
+          className="grid gap-4 py-4"
+          action={async (formData: FormData) => {
+            await UpFormWithBoatName(formData).then((result) => {
+              if (result?.error) {
+                toast.error(result.error);
+              } else {
+                toast.success("Please verify your email");
+                ref.current?.reset();
+              }
+            });
+          }}
+        >
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>

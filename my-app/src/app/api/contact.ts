@@ -11,14 +11,15 @@ export async function sendReservationMail(
   const resend = new Resend(process.env.RESEND_API_KEY);
   
   const { data, error } = await resend.emails.send({
-    from: 'Acme <noreplya@mtlyachtexperience.com>',
+    from: 'mtlyachtexperience <noreplya@mtlyachtexperience.com>',
     to: reservation.email,
     subject: "Verify your email",
     html: compileVerifyTemplate(reservation.name, link),
   });
   if (error) {
-    console.log("failed sending the verification email", error);
-    throw error;
+    return{
+      error :"Something went wrong!"
+    }
   } else{
     console.log("success sending the verification email", data?.id);
   }

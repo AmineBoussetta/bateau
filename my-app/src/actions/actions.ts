@@ -27,29 +27,35 @@ export async function UpFrom(boat: string, formData: FormData) {
     isAccepted: false,
     sended: false,
   };
-  try {
-    await createReservation(reservation).then((reservation: Reservation) => {
-      getClient(reservation.name).then(async (value: Client) => {
-        try {
-          await sendReservationMail(reservation, `${url}/verify/${value?._id}`);
-        } catch (error) {
-          console.error("Error sending reservation email:", error);
-          return {
-            error: "Something went wrong!",
-          };
-        }
 
-        mails.map((data) => {
-          sendToAdminsMail(data);
-        });
-      });
+  try {
+    const createdReservation = await createReservation(reservation);
+    const client = await getClient(createdReservation.name);
+
+    if (!client) {
+      return { error: "Client not found!" };
+    }
+
+    const result = await sendReservationMail(
+      createdReservation,
+      `${url}/verify/${client?._id}`
+    );
+
+    if (result?.error) {
+      return result;
+    }
+
+    mails.forEach((data) => {
+      sendToAdminsMail(data);
     });
+
+    return { success: true };
+
   } catch (error) {
-    return {
-      error: "Something went wrong!",
-    };
+    return { error: "Something went wrong!" };
   }
 }
+
 
 export async function SendMessage(formData: FormData) {
   const data: Contact = {
