@@ -8,7 +8,7 @@ export function FooterComponent() {
               className="text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
               href="#"
             >
-              info@example.com
+              Montrealboat@gmail.com
             </a>
             <div className="text-sm text-gray-500 dark:text-gray-400">+1 514 558 6416</div>
           </div>
