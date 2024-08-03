@@ -51,7 +51,7 @@ export async function LandingPage() {
           <div className="flex items-start">
             <CompassIcon className="h-8 w-8 mr-4 text-gray-900 dark:text-gray-50" />
             <div>
-              <h3 className="text-xl font-bold mb-2">Wide Selection</h3>
+              <h3 className="text-xl font-bold mb-2">Wide selection</h3>
               <p className="text-gray-600 dark:text-gray-400">
                 Choose from a wide range of boats to fit your needs and budget.
               </p>
